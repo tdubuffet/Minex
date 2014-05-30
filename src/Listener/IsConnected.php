@@ -8,6 +8,7 @@ namespace Listener;
  * Date: 30/05/14
  * Time: 11:36
  */
+use Minex\Listener\AbstractListener;
 
 /**
  * Class IsConnected
@@ -15,7 +16,7 @@ namespace Listener;
  *
  * Permet de tester si l'utilisateur est connecté sinon il est redirigé
  */
-class IsConnected
+class IsConnected extends AbstractListener
 {
     /**
      * Vérifie le listener
@@ -23,7 +24,10 @@ class IsConnected
      */
     public function action()
     {
-        if ( isset($_SESSION['admin_id'])) {
+
+        $uri = new \Minex\Http\Uri();
+
+        if ( !isset($_SESSION['admin_id']) && $uri->getController() != 'user' && $uri->getAction() != 'login') {
             return true;
         }
 
@@ -35,7 +39,7 @@ class IsConnected
      */
     public function notCheked()
     {
-        \Minex\Request\Request::redirect("/page/login");
+        \Minex\Request\Request::redirect("/user/login");
         exit;
     }
 

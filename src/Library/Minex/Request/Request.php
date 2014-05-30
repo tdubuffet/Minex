@@ -20,7 +20,7 @@ class Request
              ->initListener()
              ->initRouting();
 
-        //$this->getListener()->checkListener();
+        $this->getListener()->checkListener();
 
     }
 
@@ -47,7 +47,6 @@ class Request
                 echo 'Exception: ' . $e->getMessage();
                 exit;
             }
-
         }
 
         return $this;
@@ -65,7 +64,7 @@ class Request
 
     static function redirect($uri)
     {
-        header('Location: ' . $uri);
+        header('Location: ' . $uri); exit;
     }
 
     /**
@@ -114,5 +113,25 @@ class Request
     public function getListener()
     {
         return $this->listener;
+    }
+
+    /**
+     * Retourne le nom du controller
+     *
+     * @return mixed
+     */
+    public function getControllerName()
+    {
+        return $this->getRouting()->getController();
+    }
+
+    /**
+     * Retourne le nom de l'action
+     *
+     * @return mixed
+     */
+    public function getActionName()
+    {
+        return $this->getRouting()->getAction();
     }
 }

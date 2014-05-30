@@ -13,6 +13,27 @@ abstract class Core {
 
     private $request = null;
 
+    private $uri     = null;
+
+    public function __construct()
+    {
+        $this->initUri();
+    }
+
+    public function initUri()
+    {
+        if ( is_null($this->uri) ) {
+            $this->uri = new \Minex\Http\Uri();
+        }
+
+        return $this;
+    }
+
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
     /**
      * Récupére un paramètre GET ou POST
      *

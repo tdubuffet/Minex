@@ -25,7 +25,7 @@ class RegisterListener
 
     public function checkListener()
     {
-        foreach($this->checkListener() as $listener) {
+        foreach($this->listener as $listener) {
             $listener->checkListener();
         }
     }

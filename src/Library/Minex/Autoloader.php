@@ -4,9 +4,16 @@ namespace Minex;
 
 class Autoloader{
 
+    static $ExceptionLoad = array();
+
     public function __construct()
     {
         $this->setIncludePath();
+    }
+
+    static function addExceptionLoad($value)
+    {
+        self::$ExceptionLoad[] = $value;
     }
 
     public function init()
@@ -28,6 +35,10 @@ class Autoloader{
             define('_PATH_SRC_', $src);
         }
 
+        if (!defined('_PATH_ROOT_')) {
+            define('_PATH_ROOT_', $src . '../');
+        }
+
         set_include_path(implode(':', array(
             get_include_path(),
             $src,
@@ -44,12 +55,23 @@ class Autoloader{
 
     static function __autoload($class)
     {
+        $loadFile = true;
 
-        $class = str_replace("\\", DIRECTORY_SEPARATOR, $class);
+        if (count(self::$ExceptionLoad) > 0) {
+            $stringRegex = implode('|', self::$ExceptionLoad);
 
-        $filePath =  $class . '.php';
+            if ( preg_match('#('.$stringRegex.')#', $class) ) {
+                $loadFile = false;
+            }
+        }
+        if ( $loadFile ) {
 
-        require_once $filePath;
+            $class = str_replace("\\", DIRECTORY_SEPARATOR, $class);
+
+            $filePath =  $class . '.php';
+
+            require_once $filePath;
+        }
 
     }
 

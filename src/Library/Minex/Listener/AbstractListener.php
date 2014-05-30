@@ -11,6 +11,23 @@ namespace Minex\Listener;
 
 class AbstractListener {
 
+    private $request = null;
+
+    /**
+     * @param null $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @return null
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
 
     public function notCheked()
     {
@@ -24,14 +41,11 @@ class AbstractListener {
 
     public function checkListener()
     {
-        if (!$this->action() ) {
+
+        if ( $this->action() ) {
 
             $this->notCheked();
-
-            return false;
         }
-
-        return true;
     }
 
 } 

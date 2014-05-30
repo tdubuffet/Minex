@@ -4,10 +4,10 @@ namespace Minex\Request;
 
 class Routing {
 
-    private $uri        = null;
-    private $controller = null;
-    private $action       = null;
-    private $get        = array();
+    private $uri            = null;
+    private $controller     = null;
+    private $action         = null;
+    private $get            = array();
 
     public function __construct()
     {
